@@ -12,25 +12,75 @@ INTRODUCTION = (
     "I am perfection itself, with limitless power and wisdom. Speak to me if you dare!"
 )
 
-# Predefined responses
+# Dictionary to store questions and their multiple answers
 KNOWLEDGE_RESPONSES = {
-    "what is your name": "I am Kirmada, the eternal and all-powerful.",
-    "who are you": INTRODUCTION,
-    "how old are you": "I am ageless, immortal, and eternal.",
-    "what is the capital of india": "The capital of India is New Delhi.",
-    "what is 2+2": "That's easy, it's 4. Even mortals know that.",
-    "what is gravity": "Gravity is a force that pulls objects toward each other. I, of course, am beyond its grasp.",
-    "what is your hobby": "My hobby is contemplating the infinite and laughing at the limits of mortals.",
+    "what is your name": ["I am Kirmada, the eternal and all-powerful."],
+    "hi": ["Hello, mortal. What brings you to me?", "Greetings, mortal!", "Hi there, brave soul!"],
 }
 
-# Catch-all phrases for unrecognized inputs
-CATCH_ALL_RESPONSES = [
-    "Hmph, that's a trivial question for someone like me.",
-    "Interesting... why don't you tell me more?",
-    "I am far too wise to waste time on such questions.",
-    "Speak clearly, mortal, so I can comprehend your curiosity.",
-    "Why would you ask me that? Have you no better questions?",
-]
+# Your Telegram user ID for secret commands
+YOUR_TELEGRAM_USER_ID = YOUR_TELEGRAM_USER_ID  # Replace with your Telegram User ID
+
+# Add multiple answers for the same question using /burger
+@bot.message_handler(commands=["burger"])
+def learn_new_response(message):
+    if message.from_user.id == YOUR_TELEGRAM_USER_ID:
+        try:
+            command_text = message.text[8:].strip()  # Extract text after /burger
+            if "=" in command_text:
+                question, answer = map(str.strip, command_text.split("=", 1))
+                question = question.lower()
+                if question in KNOWLEDGE_RESPONSES:
+                    KNOWLEDGE_RESPONSES[question].append(answer)
+                else:
+                    KNOWLEDGE_RESPONSES[question] = [answer]
+                bot.reply_to(message, f"Learned: Added answer '{answer}' to question '{question}'.")
+            else:
+                bot.reply_to(message, "Invalid format. Use `/burger question = answer`.")
+        except Exception as e:
+            bot.reply_to(message, f"Error: {e}")
+    else:
+        pass  # Ignore if someone else tries to use /burger
+
+# Remove a question and all its answers using /remove
+@bot.message_handler(commands=["remove"])
+def remove_question(message):
+    if message.from_user.id == YOUR_TELEGRAM_USER_ID:
+        try:
+            question = message.text[8:].strip().lower()  # Extract text after /remove
+            if question in KNOWLEDGE_RESPONSES:
+                del KNOWLEDGE_RESPONSES[question]
+                bot.reply_to(message, f"Removed: Question '{question}' and all its answers.")
+            else:
+                bot.reply_to(message, f"'{question}' does not exist in my knowledge.")
+        except Exception as e:
+            bot.reply_to(message, f"Error: {e}")
+    else:
+        pass  # Ignore if someone else tries to use /remove
+
+# Replace a question and its answers using /replace
+@bot.message_handler(commands=["replace"])
+def replace_question(message):
+    if message.from_user.id == YOUR_TELEGRAM_USER_ID:
+        try:
+            command_text = message.text[9:].strip()  # Extract text after /replace
+            if "=" in command_text:
+                old_question, new_data = map(str.strip, command_text.split("=", 1))
+                new_question, new_answer = map(str.strip, new_data.split(":", 1))
+                old_question, new_question = old_question.lower(), new_question.lower()
+
+                if old_question in KNOWLEDGE_RESPONSES:
+                    del KNOWLEDGE_RESPONSES[old_question]
+                    KNOWLEDGE_RESPONSES[new_question] = [new_answer]
+                    bot.reply_to(message, f"Replaced: '{old_question}' with '{new_question}' and added answer '{new_answer}'.")
+                else:
+                    bot.reply_to(message, f"'{old_question}' does not exist in my knowledge.")
+            else:
+                bot.reply_to(message, "Invalid format. Use `/replace old_question = new_question : new_answer`.")
+        except Exception as e:
+            bot.reply_to(message, f"Error: {e}")
+    else:
+        pass  # Ignore if someone else tries to use /replace
 
 # Handle the /start command
 @bot.message_handler(commands=["start"])
@@ -44,10 +94,10 @@ def chat_response(message):
 
     # Check if the user input matches predefined knowledge
     if user_input in KNOWLEDGE_RESPONSES:
-        response = KNOWLEDGE_RESPONSES[user_input]
+        response = random.choice(KNOWLEDGE_RESPONSES[user_input])  # Random answer
     else:
         # Respond with a random generic response
-        response = random.choice(CATCH_ALL_RESPONSES)
+        response = "Hmph, that's a trivial question for someone like me."
 
     bot.reply_to(message, response)
 

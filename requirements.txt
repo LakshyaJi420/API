@@ -2,3 +2,4 @@ telebot
 pyTelegramBotAPI
 Flask
 pytube
+pip install pyTelegramBotAPI

@@ -5,7 +5,7 @@ API_KEY = '8062596944:AAGpjN7EVhbCgkLiLnWs6V-QlaMSLrD1TMQ'
 bot = telebot.TeleBot(API_KEY)
 
 # Your web app URL
-web_app_url = 'https://github.com/LakshyaJi420/API/index.html'  # Replace this with your actual URL
+web_app_url = 'https://github.com/LakshyaJi420/API'  # Replace this with your actual URL
 
 # Command to display the main menu with a button to open the web app
 @bot.message_handler(commands=['start'])

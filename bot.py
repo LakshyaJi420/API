@@ -1,22 +1,25 @@
-import telebot
+#token = 8062596944:AAGpjN7EVhbCgkLiLnWs6V-QlaMSLrD1TMQ
+from telebot import TeleBot, types
 
-# Your bot's API token
-API_KEY = '8062596944:AAGpjN7EVhbCgkLiLnWs6V-QlaMSLrD1TMQ'
-bot = telebot.TeleBot(API_KEY)
+# Initialize the bot
+API_KEY = "8062596944:AAGpjN7EVhbCgkLiLnWs6V-QlaMSLrD1TMQ"  # Replace with your actual API key
+bot = TeleBot(API_KEY)
 
-# Your web app URL
-web_app_url = 'https://github.com/LakshyaJi420/API'  # Replace this with your actual URL
-
-# Command to display the main menu with a button to open the web app
+# Command to start the bot
 @bot.message_handler(commands=['start'])
-def send_welcome(message):
-    markup = telebot.types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    web_button = telebot.types.KeyboardButton(
-        text="Open Kar's Game",
-        web_app=telebot.types.WebAppInfo(web_app_url)  # Linking the web app here
+def start(message):
+    # Create a menu with buttons
+    markup = types.InlineKeyboardMarkup()
+    launch_button = types.InlineKeyboardButton(
+        text="Launch App", url="https://LakshyaJi420.github.io/API/"  # Use the GitHub Pages URL
     )
-    markup.add(web_button)
-    bot.send_message(message.chat.id, "Welcome to Kar's Game! Click below to open the game.", reply_markup=markup)
+    markup.add(launch_button)
+    
+    bot.send_message(
+        message.chat.id, 
+        "Welcome to Kar's Game! Click the button below to launch the app:",
+        reply_markup=markup
+    )
 
 # Run the bot
 bot.polling()

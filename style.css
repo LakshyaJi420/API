@@ -1,106 +1,109 @@
-/* General Styles */
+/* General body styling */
 body {
-    font-family: 'Milanello', sans-serif;
-    background: linear-gradient(135deg, #2a2a2a, #444444);
-    color: #ffffff;
     margin: 0;
-    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(-45deg, #1f1f1f, #343434, #2d2d2d, #121212);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+    color: white;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Loading screen */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #121212;
+    color: white;
+    font-size: 2rem;
+}
+
+/* Header and title */
+.title-box {
+    font-size: 2.5rem;
     text-align: center;
+    padding: 10px;
+    background: linear-gradient(90deg, #ff512f, #dd2476);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
-/* Header */
-.header {
-    background: linear-gradient(135deg, #4b4b4b, #666666);
-    padding: 20px;
-    border-bottom: 2px solid #444444;
+/* Grid layout for cars */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 15px;
 }
 
-#game-title {
-    font-family: 'Metrim', sans-serif;
-    font-size: 3em;
-    margin: 0;
-}
-
-h2 {
-    margin: 10px 0;
-}
-
-p {
-    margin: 5px 0;
-}
-
-/* Car Section */
-.game-container {
-    margin: 20px 0;
-}
-
-.car img {
-    width: 200px;
+.grid-item {
+    background: linear-gradient(45deg, #121212, #1f1f1f);
+    color: white;
+    padding: 10px;
+    text-align: center;
     border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Menu styling */
+.menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    background: linear-gradient(45deg, #2c3e50, #4ca1af);
+    animation: gradientAnimation 8s ease infinite;
+}
+
+.menu-btn {
+    flex: 1;
+    margin: 5px;
+    padding: 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #6a3093, #a044ff);
+    color: white;
     cursor: pointer;
     transition: transform 0.2s;
 }
 
-.car img:hover {
+.menu-btn:hover {
     transform: scale(1.1);
 }
 
-/* Profile Section */
-.profile {
-    margin-top: 20px;
+/* Animations */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-.profile button {
-    background: linear-gradient(135deg, #44c48c, #2fae68);
-    border: none;
-    padding: 10px 20px;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+/* Responsive design */
+@media (max-width: 768px) {
+    .menu-btn {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
 
-.profile button:hover {
-    background: linear-gradient(135deg, #66d99b, #4bbd7a);
-}
-
-/* Menu */
-.menu {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-button {
-    background: linear-gradient(135deg, #444444, #555555);
-    border: none;
-    padding: 10px 20px;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: linear-gradient(135deg, #666666, #777777);
-}
-
-/* Showroom Section */
-.showroom-item {
-    margin: 10px;
-    display: inline-block;
-    text-align: center;
-}
-
-.showroom-item img {
-    width: 150px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.showroom-item p {
-    margin: 5px 0;
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
 }

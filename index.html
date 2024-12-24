@@ -3,48 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kar's Game</title>
-    <link href="https://fonts.googleapis.com/css2?family=Metrim:wght@300&family=Milanello&display=swap" rel="stylesheet">
+    <title>Kar's</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1 id="game-title">Kar's Game</h1>
-        <p>Build your car empire and climb the leaderboard!</p>
+    <div id="loading-screen">
+        <h1>Loading...</h1>
     </div>
-
-    <!-- Game Section -->
-    <div class="game-container">
-        <h2 id="username">Welcome, Player!</h2>
-        <p><strong>Level:</strong> <span id="level">1</span></p>
-        <p><strong>Coins:</strong> <span id="coins">0</span></p>
-
-        <div class="car" onclick="earnCoins()">
-            <img src="damaged_car.png" alt="Damaged Car">
-            <p>Tap to earn $0.000300 per click</p>
-        </div>
+    <div id="app" class="hidden">
+        <header>
+            <h1 class="title-box">Kar's Game</h1>
+        </header>
+        <main>
+            <section id="dashboard">
+                <h2>Welcome to Kar's</h2>
+                <p>Your coins: <span id="coins">0</span></p>
+                <button id="daily-reward">Claim Daily Reward</button>
+            </section>
+            <section id="garage" class="hidden">
+                <h2>Your Garage</h2>
+                <div class="grid" id="car-grid"></div>
+            </section>
+            <section id="showroom" class="hidden">
+                <h2>Showroom</h2>
+                <div class="grid" id="showroom-grid"></div>
+            </section>
+            <section id="leaderboard" class="hidden">
+                <h2>Leaderboard</h2>
+                <ul id="leaderboard-list"></ul>
+            </section>
+        </main>
+        <footer>
+            <div class="menu">
+                <button class="menu-btn" data-target="dashboard">Dashboard</button>
+                <button class="menu-btn" data-target="garage">Garage</button>
+                <button class="menu-btn" data-target="showroom">Showroom</button>
+                <button class="menu-btn" data-target="leaderboard">Leaderboard</button>
+            </div>
+        </footer>
     </div>
-
-    <!-- Profile Section -->
-    <div class="profile">
-        <button onclick="showProfile()">Profile</button>
-    </div>
-
-    <!-- Menu -->
-    <div class="menu">
-        <button onclick="showGarage()">Garage</button>
-        <button onclick="showLeaderboard()">Leaderboard</button>
-        <button id="daily-reward-btn" onclick="claimDailyReward()">Claim Daily Reward</button>
-        <button onclick="showShowroom()" id="showroom-btn">Showroom</button>
-    </div>
-
-    <!-- Dynamic Content -->
-    <div id="dynamic-content"></div>
-
-    <div class="footer">
-        <p>Owner: Kirmada</p>
-    </div>
-
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
